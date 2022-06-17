@@ -16,10 +16,10 @@ function breweryBuilder(data) {
     const breweryPhone = document.createElement('h4')
     const breweryPostal = document.createElement('h4')
     const breweryWebsite = document.createElement('a')
-    breweryWebsite.href = data.website_url
+    if(data.website_url) breweryWebsite.href = data.website_url
 
     breweryContainer.className = 'beer-card'
-    breweryWebsite.textContent = `${data.website_url}`
+    if(data.website_url) breweryWebsite.textContent = `${data.website_url}`
     breweryPostal.textContent = data.postal_code
     breweryPhone.textContent = data.phone
     breweryCity.textContent = data.city
