@@ -2,7 +2,8 @@
 // city, state, country, name, phone, postal_code, website_url
 
 const mainDiv = document.getElementById('main-div')
-let zipcode = 0
+const zipSearch = document.getElementById('zipcode-search')
+const stateSearch = document.getElementById('state-search')
 
 let pageNumber = 1
 
@@ -18,12 +19,38 @@ fetch (`https://api.openbrewerydb.org/breweries?page=1&per_page=10`)
 .then(res => res.json())
 .then(data => data.forEach(breweryBuilder))
 
-// Event Listener for Next Button
-const next = document.querySelector('#next')
-next.addEventListener('click', function(){
+function pageReset () {
     while (mainDiv.firstChild) {
         mainDiv.removeChild(mainDiv.lastChild);
     }
+}
+
+// Search by Zipcode event listener
+zipSearch.addEventListener('submit', (e) => {
+    (e).preventDefault()
+    let zipcode = e.target.zipcode.value
+    pageReset()
+    fetch(`https://api.openbrewerydb.org/breweries?by_postal=${zipcode}&per_page=10`)
+    .then(res => res.json())
+    .then(data => data.forEach(breweryBuilder))
+    zipSearch.reset()
+})
+
+// Search by State event listener
+stateSearch.addEventListener('submit', (e) => {
+    (e).preventDefault()
+    let state = e.target.state.value
+    pageReset()
+    fetch(`https://api.openbrewerydb.org/breweries?page=1&by_state=${state}&per_page=10`)
+    .then(res => res.json())
+    .then(data => data.forEach(breweryBuilder))
+    stateSearch.reset()
+})
+
+// Event Listener for Next Button
+const next = document.querySelector('#next')
+next.addEventListener('click', function(){
+    pageReset()
     pageNumber += 1
 
     fetch (`https://api.openbrewerydb.org/breweries?page=${pageNumber}&per_page=10`)
@@ -35,9 +62,7 @@ next.addEventListener('click', function(){
 const previous = document.querySelector('#previous')
 previous.addEventListener('click', function(){
     if(pageNumber > 1){
-        while (mainDiv.firstChild) {
-            mainDiv.removeChild(mainDiv.lastChild);
-        }
+        pageReset()
         pageNumber -= 1
 
         fetch (`https://api.openbrewerydb.org/breweries?page=${pageNumber}&per_page=10`)
