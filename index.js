@@ -1,24 +1,20 @@
-//data elements we want
-// city, state, country, name, phone, postal_code, website_url
 
 const mainDiv = document.getElementById('main-div')
 const search = document.getElementById('search')
+const previous = document.querySelector('#previous')
+const next = document.querySelector('#next')
 
 let pageNumber = 1
 let stateSearchParameter = ""
 let citySearchParameter = ""
 let zipcodeSearchParameter = ""
 
-// for(i = 1; i < 50; i++){
-//     fetch (`https://api.openbrewerydb.org/breweries?page=${i}&per_page=10`)
-//     .then(res => res.json())
-//     .then(data => data.forEach(breweryBuilder))
-// }
-
-
 fetch (`https://api.openbrewerydb.org/breweries?page=1&per_page=10`)
 .then(res => res.json())
-.then(data => data.forEach(breweryBuilder))
+.then(data => {
+    data.forEach(breweryBuilder)
+    hidePrevious()
+})
 
 function pageReset(){
     while (mainDiv.firstChild) {
@@ -26,9 +22,11 @@ function pageReset(){
     }
 }
 
+function hidePrevious(){
+    previous.classList.add('hidden')
+}
 
-
-// Search by State event listener
+// Search Form Event Listener
 search.addEventListener('submit', (e) => {
     (e).preventDefault()
     let state = e.target.state.value
@@ -42,22 +40,34 @@ search.addEventListener('submit', (e) => {
     fetch(`https://api.openbrewerydb.org/breweries?${parameter}page=1&per_page=10`)
     .then(res => res.json())
     .then(data => data.forEach(breweryBuilder))
+
+    hidePrevious()
     search.reset()
 })
 
 // Event Listener for Next Button
-const next = document.querySelector('#next')
 next.addEventListener('click', function(){
-    pageReset()
     pageNumber += 1
     let parameter = `${stateSearchParameter}&${citySearchParameter}&`
     fetch (`https://api.openbrewerydb.org/breweries?${parameter}page=${pageNumber}&per_page=10`)
     .then(res => res.json())
-    .then(data => data.forEach(breweryBuilder))
+    .then(data => {
+        if(data.length === 0){
+            alert('No More Pages')
+            pageNumber -= 1
+        }
+        else{
+            pageReset()
+            data.forEach(breweryBuilder)
+        }
+
+    if(pageNumber > 1){
+        previous.classList.remove('hidden')
+    }      
+})
 })
 
 // Event Listener for Previous Button
-const previous = document.querySelector('#previous')
 previous.addEventListener('click', function(){
     if(pageNumber > 1){
         pageReset()
@@ -66,9 +76,9 @@ previous.addEventListener('click', function(){
         fetch (`https://api.openbrewerydb.org/breweries?${parameter}page=${pageNumber}&per_page=10`)
         .then(res => res.json())
         .then(data => data.forEach(breweryBuilder))
-    }
-    else{
-        alert('Unable To Execute Command')
+        if (pageNumber === 1){
+            hidePrevious()
+        }
     }
 })
 
@@ -84,7 +94,6 @@ function breweryBuilder(data) {
     if(data.website_url) breweryWebsite.href = data.website_url
 
     breweryContainer.className = 'beer-card'
-    breweryContainer.setAttribute('id', data.id)
     if(data.website_url) breweryWebsite.textContent = `${data.website_url}`
     breweryPostal.textContent = data.postal_code
     breweryPhone.textContent = data.phone
@@ -94,8 +103,6 @@ function breweryBuilder(data) {
     breweryName.textContent = data.name
 
     breweryContainer.append(breweryName, breweryState, breweryCountry, breweryCity, breweryPhone, breweryPostal, breweryWebsite)
-    //const card = document.querySelector(`#a${cardNumber}`)
-    //card.append(breweryContainer)
     mainDiv.append(breweryContainer)
 }
 
