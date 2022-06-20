@@ -39,3 +39,7 @@ button {
     justify-self: center;
     cursor: pointer;
   }
+
+  .hidden {
+    display: none;
+  }

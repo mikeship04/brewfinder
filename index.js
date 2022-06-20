@@ -2,12 +2,92 @@
 // city, state, country, name, phone, postal_code, website_url
 
 const mainDiv = document.getElementById('main-div')
+let zipcode = 0
+let pageNumber = 1
+
+function grabBrewery(){
+    fetch ('https://api.openbrewerydb.org/breweries')
+    .then(res => res.json())
+    .then(data => {
+        results = data.filter(element => {
+            dataZipcode = parseInt(element.postal_code.toString().substr(0,5))
+            return zipcode === dataZipcode
+        })
+        results.forEach(breweryBuilder)
+        if(results.length === 0){
+            console.log("Sorry there were no breweries that fit this search criteria")
+        }
+    })
+}
 
 fetch ('https://api.openbrewerydb.org/breweries')
-.then(r => r.json())
-.then(data => data.forEach(breweryBuilder))
+    .then(res => res.json())
+    .then(data => {
+        organizePage(data)
+        for(i = 1; i < 9; i++){
+            const card = document.getElementById(`a${i}`).children
+            card[0].classList.toggle('page1')
+            card[1].classList.toggle('hidden')
+            card[1].classList.toggle('page2')
+            if(card[2]){
+                card[2].classList.toggle('hidden')
+                card[2].classList.toggle('page3')
+            }
+        }
+    })
 
-function breweryBuilder(data) {
+//Next page button
+const next = document.querySelector('#next')
+next.addEventListener('click', function(){
+    const currentPage = document.getElementsByClassName(`page${pageNumber}`)
+    for(element of currentPage){
+        element.classList.toggle('hidden')
+    }
+
+    pageNumber += 1
+
+    const nextPage = document.getElementsByClassName(`page${pageNumber}`)
+    for(element of nextPage){
+        element.classList.toggle('hidden')
+    }
+})
+
+//Previous page button
+const previous = document.querySelector('#previous')
+previous.addEventListener('click', function(){
+    if(pageNumber > 1){
+        const currentPage = document.getElementsByClassName(`page${pageNumber}`)
+        for(element of currentPage){
+            element.classList.toggle('hidden')
+        }
+ 
+        pageNumber -= 1
+        
+        const previousPage = document.getElementsByClassName(`page${pageNumber}`)
+        for(element of previousPage){
+            element.classList.toggle('hidden')
+        }
+    }
+    else{
+        alert('Stop scrolling')
+    }
+})
+
+//Organizes array of elements into one of 8 div classes from a1-a8
+function organizePage(array){
+    let count = 0
+    for(x = 0; x < Math.ceil(array.length/8); x++){
+        for(i = 1; i < 9; i++){
+            breweryBuilder(array[count], i)
+            count += 1
+            if(count === array.length){
+                break
+            }
+        }
+    }
+}
+
+function breweryBuilder(data, cardNumber) {
     const breweryContainer = document.createElement('div')
     const breweryName = document.createElement('h2')
     const breweryState = document.createElement('h4')
@@ -19,6 +99,7 @@ function breweryBuilder(data) {
     if(data.website_url) breweryWebsite.href = data.website_url
 
     breweryContainer.className = 'beer-card'
+    breweryContainer.setAttribute('id', data.id)
     if(data.website_url) breweryWebsite.textContent = `${data.website_url}`
     breweryPostal.textContent = data.postal_code
     breweryPhone.textContent = data.phone
@@ -28,5 +109,20 @@ function breweryBuilder(data) {
     breweryName.textContent = data.name
 
     breweryContainer.append(breweryName, breweryState, breweryCountry, breweryCity, breweryPhone, breweryPostal, breweryWebsite)
-    mainDiv.append(breweryContainer)
+    const card = document.querySelector(`#a${cardNumber}`)
+    card.append(breweryContainer)
 }
+
+
+// Zipcode form to search by zipcode
+const zipcodeForm = document.querySelector('#zipcode-search')
+zipcodeForm.addEventListener('submit', e => {
+    e.preventDefault()
+    let tempZipcode = parseInt(e.target.zipcode.value)
+    if(!tempZipcode){
+        tempZipcode = 0
+    }
+    zipcode = tempZipcode
+    grabBrewery()
+    zipcodeForm.reset()
+})
