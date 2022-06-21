@@ -1,35 +1,34 @@
-form {
-  flex-direction: column;
-}
-
 body {
-    margin: 0;
+    margin: 10px;
     font-family: monospace;
     background-color: #323e49;
+
+    display: grid;
+    grid-template-columns: 30vw 70vw;
+    grid-template-rows: 40vh 50vh 10vh; 
 }
+
+#formArea{
+    grid-column: 1;
+    grid-row: 1;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
 
 #main-div {
-  flex-direction: row;
-  display: flex;
-  width: 90vw;
-  flex-flow: wrap;
-  align-content: center;
-  justify-content: space-evenly;
-}
+    grid-column: 2;
+    grid-row: 1 / span 2;
 
-.input-submit-button {
-    position: relative;
-    background-color: green;
-    border: 1mm ridge black;
-    border-radius: 5px;
-    height: 3rem;
-    width: max-content;
-    color: whitesmoke;
-    font-size: 18px;
-    justify-self: center;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 70vw;
+    height: 90vh;
+    row-gap: 0px;
+    column-gap: 0px;
 }
 
 .beer-card {
@@ -37,26 +36,68 @@ body {
   border: grey solid 1px;
   padding: 1rem;
   margin: 1rem 2rem;
-  width: 25%;
-  height: auto;
+  width: 10vw;
+  height: 10vw;
   box-shadow: 3px 4px lightgreen;
   border-radius: 25px;
   background: #434343;
   color: #ffffff;
+
+  /* display: inline-block;
+  height: auto; */
+  overflow: auto;
+  /* Wraps the links so it doesn't overflow*/
+  word-wrap: break-word;
 }
 
-button {
-    position: relative;
-    background-color: green;
-    border: 1mm ridge black;
-    border-radius: 5px;
-    height: 3rem;
-    width: max-content;
-    color: whitesmoke;
-    font-size: 18px;
-    justify-self: center;
+.beer-card h2{
+  font-size: 12pt;
+}
+
+.beer-card p{
+  font-size: 6pt;
+}
+
+.beer-card a{
+  font-size: 6pt;
+}
+
+#buttonArea{
+  grid-column: 2;
+  grid-row: 3;
+
+  display: grid;
+  grid-template-columns: 35vw 35vw;
+}
+
+/*Styling for each button*/
+#next, #previous, .input-submit-button{
+    height: 38px;
+    padding: 0 30px;
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 38px;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #bbb;
     cursor: pointer;
-    margin-left: 20px;
+    box-sizing: border-box;
+  }
+
+  #next{
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  #previous{
+    grid-column: 1;
+    justify-self: center;
   }
 
   .hidden {
