@@ -86,6 +86,8 @@ previous.addEventListener('click', function(){
 //builds the brewery cards from incoming data
 function breweryBuilder(data) {
     const breweryContainer = document.createElement('div')
+    const breweryRater = document.createElement('form')
+    const starRating = document.createElement('div')
     const breweryName = document.createElement('h2')
     const breweryState = document.createElement('h5')
     const breweryCountry = document.createElement('h6')
@@ -103,9 +105,28 @@ function breweryBuilder(data) {
     breweryCountry.textContent = data.country
     breweryState.textContent = data.state
     breweryName.textContent = data.name
+    breweryRater.id = 'Rating'
+    starRating.id = 'star-form'
 
-    breweryContainer.append(breweryName, breweryState, breweryCity, breweryCountry, breweryPhone, breweryPostal, breweryWebsite)
+    breweryContainer.append(breweryRater, breweryName, breweryState, breweryCity, breweryCountry, breweryPhone, breweryPostal, breweryWebsite)
+    breweryRater.append(starRating)
+    for (element of starBuilder()) {
+        starRating.append(element)
+    }
     mainDiv.append(breweryContainer)
+}
+
+function starBuilder () {
+    const starArray = []
+    for (i=1; i < 6; i++) {
+        const star = document.createElement('input')
+        star.type = 'radio'
+        star.name = `star${i}`
+        star.rating = `star-rating${i}`
+        star.value = `star-value${i}`
+        starArray.push(star)
+    }
+    return(starArray)
 }
 
 
