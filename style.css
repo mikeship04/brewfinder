@@ -5,7 +5,7 @@ form {
 body {
     margin: 0;
     font-family: monospace;
-    background-color: lightgrey;
+    background-color: #323e49;
 }
 
 #main-div {
@@ -40,6 +40,8 @@ body {
   height: auto;
   box-shadow: 3px 4px lightgreen;
   border-radius: 25px;
+  background: #434343;
+  color: #ffffff;
 }
 
 button {
@@ -61,4 +63,13 @@ button {
 
   .form-div {
     margin-bottom: 10px;
+    color: #ffffff;
+  }
+
+  a:link {
+    color: lightgreen;
+  }
+
+  a:visited {
+    color: darkblue;
   }
