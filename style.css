@@ -71,7 +71,7 @@ body {
 }
 
 /*Styling for each button*/
-#next, #previous, .input-submit-button{
+#next, #previous, .submit-button, #reset{
     height: 38px;
     padding: 0 30px;
     color: #fff;
