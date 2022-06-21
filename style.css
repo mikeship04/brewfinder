@@ -1,6 +1,20 @@
+form {
+  flex-direction: column;
+}
+
 body {
     margin: 0;
     font-family: monospace;
+    background-color: lightgrey;
+}
+
+#main-div {
+  flex-direction: row;
+  display: flex;
+  width: 90vw;
+  flex-flow: wrap;
+  align-content: center;
+  justify-content: space-evenly;
 }
 
 .input-submit-button {
@@ -14,17 +28,18 @@ body {
     font-size: 18px;
     justify-self: center;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .beer-card {
   text-align: center;
   border: grey solid 1px;
   padding: 1rem;
-  width: 15rem;
-  height: 25rem;
-  display: inline-grid;
   margin: 1rem 2rem;
+  width: 25%;
+  height: auto;
   box-shadow: 3px 4px lightgreen;
+  border-radius: 25px;
 }
 
 button {
@@ -42,4 +57,8 @@ button {
 
   .hidden {
     display: none;
+  }
+
+  .form-div {
+    margin-bottom: 10px;
   }

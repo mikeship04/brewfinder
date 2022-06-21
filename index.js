@@ -1,4 +1,4 @@
-
+// global variable declarations
 const mainDiv = document.getElementById('main-div')
 const search = document.getElementById('search')
 const previous = document.querySelector('#previous')
@@ -9,7 +9,8 @@ let stateSearchParameter = ""
 let citySearchParameter = ""
 let zipcodeSearchParameter = ""
 
-fetch (`https://api.openbrewerydb.org/breweries?page=1&per_page=10`)
+//intial pageload fetch
+fetch (`https://api.openbrewerydb.org/breweries?page=1&per_page=9`)
 .then(res => res.json())
 .then(data => {
     data.forEach(breweryBuilder)
@@ -37,7 +38,7 @@ search.addEventListener('submit', (e) => {
     stateSearchParameter = `by_state=${state}`
     citySearchParameter = `by_city=${city}`
     let parameter = `${stateSearchParameter}&${citySearchParameter}&${zipcodeSearchParameter}&`
-    fetch(`https://api.openbrewerydb.org/breweries?${parameter}page=1&per_page=10`)
+    fetch(`https://api.openbrewerydb.org/breweries?${parameter}page=1&per_page=9`)
     .then(res => res.json())
     .then(data => data.forEach(breweryBuilder))
 
@@ -49,7 +50,7 @@ search.addEventListener('submit', (e) => {
 next.addEventListener('click', function(){
     pageNumber += 1
     let parameter = `${stateSearchParameter}&${citySearchParameter}&`
-    fetch (`https://api.openbrewerydb.org/breweries?${parameter}page=${pageNumber}&per_page=10`)
+    fetch (`https://api.openbrewerydb.org/breweries?${parameter}page=${pageNumber}&per_page=9`)
     .then(res => res.json())
     .then(data => {
         if(data.length === 0){
@@ -73,7 +74,7 @@ previous.addEventListener('click', function(){
         pageReset()
         pageNumber -= 1
         let parameter = `${stateSearchParameter}&${citySearchParameter}&`
-        fetch (`https://api.openbrewerydb.org/breweries?${parameter}page=${pageNumber}&per_page=10`)
+        fetch (`https://api.openbrewerydb.org/breweries?${parameter}page=${pageNumber}&per_page=9`)
         .then(res => res.json())
         .then(data => data.forEach(breweryBuilder))
         if (pageNumber === 1){
@@ -82,14 +83,15 @@ previous.addEventListener('click', function(){
     }
 })
 
+//builds the brewery cards from incoming data
 function breweryBuilder(data) {
     const breweryContainer = document.createElement('div')
     const breweryName = document.createElement('h2')
-    const breweryState = document.createElement('h4')
-    const breweryCountry = document.createElement('h4')
-    const breweryCity = document.createElement('h4')
-    const breweryPhone = document.createElement('h4')
-    const breweryPostal = document.createElement('h4')
+    const breweryState = document.createElement('h5')
+    const breweryCountry = document.createElement('h6')
+    const breweryCity = document.createElement('h5')
+    const breweryPhone = document.createElement('p')
+    const breweryPostal = document.createElement('p')
     const breweryWebsite = document.createElement('a')
     if(data.website_url) breweryWebsite.href = data.website_url
 
@@ -102,7 +104,7 @@ function breweryBuilder(data) {
     breweryState.textContent = data.state
     breweryName.textContent = data.name
 
-    breweryContainer.append(breweryName, breweryState, breweryCountry, breweryCity, breweryPhone, breweryPostal, breweryWebsite)
+    breweryContainer.append(breweryName, breweryState, breweryCity, breweryCountry, breweryPhone, breweryPostal, breweryWebsite)
     mainDiv.append(breweryContainer)
 }
 
