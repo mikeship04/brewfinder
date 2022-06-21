@@ -29,6 +29,7 @@ body {
     justify-self: center;
     cursor: pointer;
     margin-top: 10px;
+    margin-left: 20px;
 }
 
 .beer-card {
@@ -55,6 +56,7 @@ button {
     font-size: 18px;
     justify-self: center;
     cursor: pointer;
+    margin-left: 20px;
   }
 
   .hidden {
@@ -64,6 +66,7 @@ button {
   .form-div {
     margin-bottom: 10px;
     color: #ffffff;
+    margin-left: 20px;
   }
 
   a:link {
