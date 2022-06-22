@@ -3,6 +3,11 @@ const mainDiv = document.getElementById('main-div')
 const search = document.getElementById('search')
 const previous = document.querySelector('#previous')
 const next = document.querySelector('#next')
+const mainCardType = document.getElementById('brewery-type')
+const mainCardName = document.getElementById('brewery-name')
+const mainCardComments = document.getElementById('brewery-comments')
+const mainCardAddress = document.getElementById('complete-address')
+const mainCard = document.getElementById('Main-Beer')
 
 let pageNumber = 1
 let stateSearchParameter = ""
@@ -140,8 +145,23 @@ function breweryBuilder(data) {
     for (element of starBuilder()) {
         starRating.append(element)
     }
+
+    breweryContainer.addEventListener('click', () => {
+        mainCardType.textContent = data.brewery_type
+        mainCardName.textContent = data.name
+        mainCardComments.textContent = `feature coming soon!`
+        mainCardAddress.textContent = breweryAddress.innerText
+
+    })
     mainDiv.append(breweryContainer)
 }
+
+// function mainCardUpdater (data) {
+//     mainCardType.textContent = data.brewery_type
+//     mainCardName.textContent = data.name
+//     mainCardComments.textContent = `feature coming soon!`
+//     mainCardAddress.textContent = breweryAddress
+// }
 
 function starBuilder () {
     const starArray = []
@@ -155,7 +175,3 @@ function starBuilder () {
     }
     return(starArray)
 }
-
-
-
-

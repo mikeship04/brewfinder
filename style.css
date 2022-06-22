@@ -13,10 +13,28 @@ body {
     grid-row: 1;
 
     display: grid;
-    align-items: center;
-    justify-items: center;
+    align-items: left;
+    justify-items: left;
 }
 
+input[type=submit]{
+  margin-left: 20px;
+}
+
+#reset {
+  margin-left: 20px;
+}
+
+input[type=text] {
+  margin-top: 8px;
+  padding: 12px 60px;
+  border: grey solid 1px;
+  box-shadow: 2px 3px lightgreen;
+  border-radius: 5px;
+  background: #434343;
+  color: #ffffff;
+  align-self: left;
+}
 
 #main-div {
     grid-column: 2;
@@ -42,7 +60,7 @@ body {
   border-radius: 25px;
   background: #434343;
   color: #ffffff;
-
+  cursor: pointer;
   /* display: inline-block;
   height: auto; */
   overflow: auto;
@@ -50,16 +68,35 @@ body {
   word-wrap: break-word;
 }
 
+.Main-Card {
+  grid-row: 2;
+  grid-column: 1;
+  text-align: center;
+  border: grey solid 1px;
+  padding: 1rem;
+  margin: 1rem 2rem;
+  box-shadow: 3px 4px lightgreen;
+  border-radius: 25px;
+  background: #434343;
+  color: #ffffff;
+}
+
+.Main-Card img {
+  display: block;
+  margin: 0 auto;
+  width: clamp(400px, 100%, 800px);
+}
+
 .beer-card h2{
-  font-size: 12pt;
+  font-size: clamp(0.75rem, 0.5000rem + 0.8333vw, 1.5rem);;
 }
 
 .beer-card p{
-  font-size: 6pt;
+  font-size: clamp(0.5rem, 0.3333rem + 0.5556vw, 1rem);
 }
 
 .beer-card a{
-  font-size: 6pt;
+  font-size: clamp(0.5rem, 0.3333rem + 0.5556vw, 1rem);
 }
 
 #buttonArea{
