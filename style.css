@@ -8,6 +8,7 @@ body {
     grid-template-rows: 40vh 50vh 10vh; 
 }
 
+/* Form Styling*/
 #formArea{
     grid-column: 1;
     grid-row: 1;
@@ -17,11 +18,13 @@ body {
     justify-items: left;
 }
 
-input[type=submit]{
-  margin-left: 20px;
+.form-div {
+  margin-bottom: 10px;
+  color: #ffffff;
+  margin-left: 20px; 
 }
 
-#reset {
+input[type=submit]{
   margin-left: 20px;
 }
 
@@ -35,6 +38,12 @@ input[type=text] {
   color: #ffffff;
   align-self: left;
 }
+
+#reset {
+  margin-left: 20px;
+}
+
+/* Styling for Main Div which holds Beer Cards*/
 
 #main-div {
     grid-column: 2;
@@ -68,25 +77,6 @@ input[type=text] {
   word-wrap: break-word;
 }
 
-.Main-Card {
-  grid-row: 2;
-  grid-column: 1;
-  text-align: center;
-  border: grey solid 1px;
-  padding: 1rem;
-  margin: 1rem 2rem;
-  box-shadow: 3px 4px lightgreen;
-  border-radius: 25px;
-  background: #434343;
-  color: #ffffff;
-}
-
-.Main-Card img {
-  display: block;
-  margin: 0 auto;
-  width: clamp(400px, 100%, 800px);
-}
-
 .beer-card h2{
   font-size: clamp(0.75rem, 0.5000rem + 0.8333vw, 1.5rem);;
 }
@@ -97,6 +87,37 @@ input[type=text] {
 
 .beer-card a{
   font-size: clamp(0.5rem, 0.3333rem + 0.5556vw, 1rem);
+}
+
+/* Styling for the main card which appears on the bottom left of screen*/
+
+.Main-Card {
+  grid-row: 2;
+  grid-column: 1;
+
+  text-align: center;
+  border: grey solid 1px;
+  padding: 1rem;
+  margin: 1rem 2rem;
+  box-shadow: 3px 4px lightgreen;
+  border-radius: 25px;
+  background: #434343;
+  color: #ffffff;
+}
+
+.Main-Card:hover, .beer-card:hover{
+  box-shadow: 5px 6px lightgreen;
+}
+
+.main-Container{
+  padding: 2px 10px;
+  border: lightgreen 1px;
+}
+
+.Main-Card img {
+  display: block;
+  margin: 0 auto;
+  width: clamp(400px, 100%, 800px);
 }
 
 #buttonArea{
@@ -125,6 +146,12 @@ input[type=text] {
     border: 1px solid #bbb;
     cursor: pointer;
     box-sizing: border-box;
+
+    opacity: 0.5;
+  }
+
+  #next:hover, #previous:hover, .submit-button:hover, #reset:hover{
+    opacity: 1;
   }
 
   #next{
@@ -137,14 +164,9 @@ input[type=text] {
     justify-self: center;
   }
 
+  /* Other Styling for links and hidden class*/
   .hidden {
     display: none;
-  }
-
-  .form-div {
-    margin-bottom: 10px;
-    color: #ffffff;
-    margin-left: 20px;
   }
 
   a:link {
