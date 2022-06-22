@@ -155,21 +155,16 @@ function breweryBuilder(data) {
     }
 
     const breweryAddress = document.createElement('p')
-    breweryAddress.textContent = `${data.city}, ${data.state}, U.S. ${postalCode} (${phoneNumber})`
+    const shortAddress = `${data.city}, ${data.state}, U.S.`
+    const longAddress = `${data.city}, ${data.state}, U.S. ${postalCode} (${phoneNumber})`
+    breweryAddress.textContent = `${shortAddress}`
 
     const breweryRater = document.createElement('form')
     const starRating = document.createElement('div')
     breweryRater.id = 'Rating'
     starRating.id = 'star-form'
 
-    const breweryWebsite = document.createElement('a')
-    breweryWebsite.textContent = ""
-    if(data.website_url){
-        breweryWebsite.href = data.website_url
-        breweryWebsite.textContent = `${data.website_url}`
-    }
-
-    breweryContainer.append(breweryName, breweryAddress, breweryRater, breweryWebsite)
+    breweryContainer.append(breweryName, breweryAddress, breweryRater)
     breweryRater.append(starRating)
     for (element of starBuilder()) {
         starRating.append(element)
@@ -182,10 +177,11 @@ function breweryBuilder(data) {
         if(data.street === null){
             street = ""
         }
-        mainCardAddress.textContent = `${street}${breweryAddress.innerText}`
+        mainCardAddress.textContent = `${street}${longAddress}`
         mainCardType.textContent = `Brewery Type: ${data.brewery_type}`
-        mainCardURL.textContent = breweryWebsite.innerText
+        mainCardURL.textContent = ""
         if(data.website_url){
+            mainCardURL.textContent = `${data.website_url}`
             mainCardURL.href = data.website_url
         }
         mainCardComments.textContent = `feature coming soon!`
