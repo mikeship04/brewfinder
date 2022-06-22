@@ -7,6 +7,7 @@ const mainCardType = document.getElementById('brewery-type')
 const mainCardName = document.getElementById('brewery-name')
 const mainCardComments = document.getElementById('brewery-comments')
 const mainCardAddress = document.getElementById('complete-address')
+const mainCardURL = document.getElementById('url')
 const mainCard = document.getElementById('Main-Beer')
 
 let pageNumber = 1
@@ -162,7 +163,7 @@ function breweryBuilder(data) {
     starRating.id = 'star-form'
 
     const breweryWebsite = document.createElement('a')
-    breweryWebsite.textContent = "No URL Available"
+    breweryWebsite.textContent = ""
     if(data.website_url){
         breweryWebsite.href = data.website_url
         breweryWebsite.textContent = `${data.website_url}`
@@ -174,13 +175,20 @@ function breweryBuilder(data) {
         starRating.append(element)
     }
 
+    // Event Listener to Display Brewery onto Main Card
     breweryContainer.addEventListener('click', () => {
         mainCardName.textContent = data.name
-        mainCardAddress.textContent = breweryAddress.innerText
-        mainCardType.textContent = data.brewery_type
+        let street = `${data.street}, `
+        if(data.street === null){
+            street = ""
+        }
+        mainCardAddress.textContent = `${street}${breweryAddress.innerText}`
+        mainCardType.textContent = `Brewery Type: ${data.brewery_type}`
+        mainCardURL.textContent = breweryWebsite.innerText
+        if(data.website_url){
+            mainCardURL.href = data.website_url
+        }
         mainCardComments.textContent = `feature coming soon!`
-
-
     })
     mainDiv.append(breweryContainer)
 }
