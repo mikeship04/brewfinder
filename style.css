@@ -12,10 +12,6 @@ body {
 #formArea{
     grid-column: 1;
     grid-row: 1;
-
-    display: grid;
-    align-items: left;
-    justify-items: left;
 }
 
 .form-div {
@@ -36,7 +32,6 @@ input[type=text] {
   border-radius: 5px;
   background: #434343;
   color: #ffffff;
-  align-self: left;
 }
 
 #reset {
@@ -61,7 +56,7 @@ input[type=text] {
 .beer-card {
   text-align: center;
   border: grey solid 1px;
-  padding: 1rem;
+  padding: 0.7rem;
   margin: 1rem 2rem;
   width: 10vw;
   height: 10vw;
@@ -78,15 +73,25 @@ input[type=text] {
 }
 
 .beer-card h2{
-  font-size: clamp(0.75rem, 0.5000rem + 0.8333vw, 1.5rem);;
+  font-size: clamp(0.75rem, 0.5000rem + 0.8333vw, 1.5rem);
+
+  padding: 4%;
+  margin: 0%;
 }
 
 .beer-card p{
   font-size: clamp(0.5rem, 0.3333rem + 0.5556vw, 1rem);
+
+  padding: 0%;
+  margin: 0%;
 }
 
 .beer-card a{
   font-size: clamp(0.5rem, 0.3333rem + 0.5556vw, 1rem);
+}
+
+.beer-card:hover{
+  box-shadow: 5px 6px lightgreen;
 }
 
 /* Styling for the main card which appears on the bottom left of screen*/
@@ -103,10 +108,9 @@ input[type=text] {
   border-radius: 25px;
   background: #434343;
   color: #ffffff;
-}
 
-.Main-Card:hover, .beer-card:hover{
-  box-shadow: 5px 6px lightgreen;
+  /* any over flowing text is placed within the contain .Main-Card*/
+  overflow: auto;
 }
 
 .main-Container{
@@ -114,12 +118,30 @@ input[type=text] {
   border: lightgreen 1px;
 }
 
-.Main-Card img {
-  display: block;
-  margin: 0 auto;
-  width: clamp(400px, 100%, 800px);
+.main-Container h4{
+  font-size: clamp(0.75rem, 0.5000rem + 0.8333vw, 1.5rem);
+
+  padding: 2%;
+  margin: 2%;
 }
 
+.main-Container p{
+  font-size: clamp(0.5rem, 0.3333rem + 0.5556vw, 1rem);
+
+  padding: 0.5%;
+  margin: 0.5%;
+}
+
+.Main-Card img {
+  border: 5px solid white;
+  width: 80%;
+  margin: 1% 5% 1%;
+  padding: 1% 5% 1%;
+}
+
+
+
+/*Styling for each button*/
 #buttonArea{
   grid-column: 2;
   grid-row: 3;
@@ -128,7 +150,6 @@ input[type=text] {
   grid-template-columns: 35vw 35vw;
 }
 
-/*Styling for each button*/
 #next, #previous, .submit-button, #reset{
     height: 38px;
     padding: 0 30px;
