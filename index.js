@@ -1,4 +1,4 @@
-// global variable declarations
+// Global Variable Declarations
 const mainDiv = document.getElementById('main-div')
 const search = document.getElementById('search')
 const previous = document.querySelector('#previous')
@@ -23,6 +23,7 @@ function clearPage(){
     .then(data => {
         data.forEach(breweryBuilder)
         hidePrevious()
+        hideButtonIfNextPage()
     })
     parameter = ""
     pageNumber = 1
@@ -40,27 +41,53 @@ function pageReset(){
 function hidePrevious(){
     previous.classList.add('hidden')
 }
-
+// Show Previous Button
+function showPrevious(){
+    previous.classList.remove('hidden')
+}
+// Hide Next Button
 function hideNext(){
     next.classList.add('hidden')
+}
+// Show Next Button
+function showNext(){
+    next.classList.remove('hidden')
+}
+
+function hideButtonIfNextPage(){
+    fetch(`https://api.openbrewerydb.org/breweries?${parameter}page=${pageNumber + 1}&per_page=12`)
+    .then(res => res.json())
+    .then(data => {
+        if(data.length === 0){
+            hideNext()
+        }
+        else{
+            showNext()
+        }
+    })
 }
 
 // Search Form Event Listener
 search.addEventListener('submit', (e) => {
     (e).preventDefault()
+    pageReset()
     pageNumber = 1
+
     let state = e.target.state.value
     let city = e.target.city.value
     let zipcode = e.target.zipcode.value
-    pageReset()
+
     stateSearchParameter = `by_state=${state}`
     citySearchParameter = `by_city=${city}`
     zipcodeSearchParameter = `by_postal=${zipcode}`
+
     parameter = `${stateSearchParameter}&${citySearchParameter}&${zipcodeSearchParameter}&`
+
     fetch(`https://api.openbrewerydb.org/breweries?${parameter}page=1&per_page=12`)
     .then(res => res.json())
     .then(data => data.forEach(breweryBuilder))
 
+    hideButtonIfNextPage()
     hidePrevious()
 })
 
@@ -77,8 +104,8 @@ next.addEventListener('click', function(){
     fetch (`https://api.openbrewerydb.org/breweries?${parameter}page=${pageNumber}&per_page=12`)
     .then(res => res.json())
     .then(data => {
+        hideButtonIfNextPage()
         if(data.length === 0){
-            alert('No More Pages')
             pageNumber -= 1
         }
         else{
@@ -87,7 +114,7 @@ next.addEventListener('click', function(){
         }
 
     if(pageNumber > 1){
-        previous.classList.remove('hidden')
+        showPrevious()
     }      
 })
 })
@@ -100,6 +127,7 @@ previous.addEventListener('click', function(){
         fetch (`https://api.openbrewerydb.org/breweries?${parameter}page=${pageNumber}&per_page=12`)
         .then(res => res.json())
         .then(data => data.forEach(breweryBuilder))
+        hideButtonIfNextPage()
         if (pageNumber === 1){
             hidePrevious()
         }
@@ -147,21 +175,15 @@ function breweryBuilder(data) {
     }
 
     breweryContainer.addEventListener('click', () => {
-        mainCardType.textContent = data.brewery_type
         mainCardName.textContent = data.name
-        mainCardComments.textContent = `feature coming soon!`
         mainCardAddress.textContent = breweryAddress.innerText
+        mainCardType.textContent = data.brewery_type
+        mainCardComments.textContent = `feature coming soon!`
+
 
     })
     mainDiv.append(breweryContainer)
 }
-
-// function mainCardUpdater (data) {
-//     mainCardType.textContent = data.brewery_type
-//     mainCardName.textContent = data.name
-//     mainCardComments.textContent = `feature coming soon!`
-//     mainCardAddress.textContent = breweryAddress
-// }
 
 function starBuilder () {
     const starArray = []
