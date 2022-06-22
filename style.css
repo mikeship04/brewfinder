@@ -21,7 +21,9 @@ body {
 }
 
 input[type=submit]{
+  margin-top: 5px;
   margin-left: 20px;
+  margin-bottom: 5px;
 }
 
 input[type=text] {
@@ -32,6 +34,10 @@ input[type=text] {
   border-radius: 5px;
   background: #434343;
   color: #ffffff;
+}
+
+input[type=text]::placeholder{
+  font-family: monospace;
 }
 
 #reset {
@@ -68,15 +74,15 @@ input[type=text] {
   /* display: inline-block;
   height: auto; */
   overflow: auto;
-  /* Wraps the links so it doesn't overflow*/
-  word-wrap: break-word;
 }
 
 .beer-card h2{
-  font-size: clamp(0.75rem, 0.5000rem + 0.8333vw, 1.5rem);
+  font-size: clamp(0.65rem, 0.4000rem + 0.7555vw, 1.25rem);
 
   padding: 4%;
   margin: 0%;
+  height: 40%;
+  overflow: auto;
 }
 
 .beer-card p{
@@ -84,10 +90,11 @@ input[type=text] {
 
   padding: 0%;
   margin: 0%;
+  height: 30%;
 }
 
-.beer-card a{
-  font-size: clamp(0.5rem, 0.3333rem + 0.5556vw, 1rem);
+#star-form{
+  height: 20%;
 }
 
 .beer-card:hover{
@@ -139,8 +146,6 @@ input[type=text] {
   padding: 1% 5% 1%;
 }
 
-
-
 /*Styling for each button*/
 #buttonArea{
   grid-column: 2;
@@ -155,7 +160,7 @@ input[type=text] {
     padding: 0 30px;
     color: #fff;
     text-align: center;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     line-height: 38px;
     letter-spacing: .1rem;
@@ -169,6 +174,7 @@ input[type=text] {
     box-sizing: border-box;
 
     opacity: 0.5;
+    font-family: inherit;
   }
 
   #next:hover, #previous:hover, .submit-button:hover, #reset:hover{
