@@ -135,6 +135,16 @@ previous.addEventListener('click', function(){
     }
 })
 
+const commentForm = document.querySelector('.comment-form')
+commentForm.addEventListener('submit', e => {
+    e.preventDefault()
+    const comment = e.target.comments.value
+    const commentP = document.createElement('p')
+    commentP.textContent = `○ ${comment}`
+    mainCardComments.appendChild(commentP)
+    commentForm.reset()
+})
+
 // Builds the Brewery Cards from Incoming Data
 function breweryBuilder(data) {
     const breweryContainer = document.createElement('div')
@@ -159,16 +169,18 @@ function breweryBuilder(data) {
     const longAddress = `${data.city}, ${data.state}, U.S. ${postalCode} (${phoneNumber})`
     breweryAddress.textContent = `${shortAddress}`
 
-    const breweryRater = document.createElement('form')
-    const starRating = document.createElement('div')
-    breweryRater.id = 'Rating'
-    starRating.id = 'star-form'
+    // const breweryRater = document.createElement('form')
+    // const starRating = document.createElement('div')
+    // breweryRater.id = 'Rating'
+    // starRating.id = 'star-form'
 
-    breweryContainer.append(breweryName, breweryAddress, breweryRater)
-    breweryRater.append(starRating)
-    for (element of starBuilder()) {
-        starRating.append(element)
-    }
+    //breweryRater
+    breweryContainer.append(breweryName, breweryAddress, starCreator())
+    // breweryRater.append(starRating)
+    // for (element of starBuilder()) {
+    //     starRating.append(element)
+    // }
+
 
     // Event Listener to Display Brewery onto Main Card
     breweryContainer.addEventListener('click', () => {
@@ -184,20 +196,59 @@ function breweryBuilder(data) {
             mainCardURL.textContent = `${data.website_url}`
             mainCardURL.href = data.website_url
         }
-        mainCardComments.textContent = `feature coming soon!`
+
+        mainCardComments.textContent = `Comments: `
     })
     mainDiv.append(breweryContainer)
 }
 
-function starBuilder () {
-    const starArray = []
-    for (i=1; i < 6; i++) {
-        const star = document.createElement('input')
-        star.type = 'radio'
-        star.name = `star${i}`
-        star.rating = `star-rating${i}`
-        star.value = `star-value${i}`
-        starArray.push(star)
+// function starBuilder () {
+//     const starArray = []
+//     for (i=1; i < 6; i++) {
+//         const star = document.createElement('input')
+//         star.type = 'radio'
+//         star.name = `star${i}`
+//         star.rating = `star-rating${i}`
+//         star.value = `star-value${i}`
+//         starArray.push(star)
+//     }
+//     return(starArray)
+// }
+
+
+// Different attempt of creating a star
+function starCreator(){
+    const starContainer = document.createElement('div')
+    starContainer.classList.add('starContainer')
+    for(i = 1; i < 6; i++){
+        const star = document.createElement('a')
+        star.classList.add('star')
+        star.textContent = '⭐'
+        starContainer.appendChild(star)
     }
-    return(starArray)
+    const starArray = Array.from(starContainer.children)
+    starArray.forEach((element, indx) => {
+        element.addEventListener('click', () => {
+            starArray.forEach((innerElement, innerIndex) => {
+                if(indx >= innerIndex){
+                    innerElement.classList.add('active')
+                }
+            })
+        starContainer.classList.add('disable')
+        // fetch('http://localhost:3000/brewery', {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Accept": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         "rating": indx + 1      
+        //     }) 
+        // })
+        })
+    })
+    return starContainer
 }
+const mainContainer = document.querySelector('.main-Container')
+mainContainer.append(starCreator())
+

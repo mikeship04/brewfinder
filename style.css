@@ -36,6 +36,12 @@ input[type=text] {
   color: #ffffff;
 }
 
+.comment-form input[type=text]{
+  padding: 12px 30px;
+  margin-bottom: 5px;
+}
+
+
 input[type=text]::placeholder{
   font-family: monospace;
 }
@@ -202,4 +208,29 @@ input[type=text]::placeholder{
 
   a:visited {
     color: darkblue;
+  }
+
+  /* Styling for the stars*/
+  .star{
+    opacity: 50%;
+  }
+
+  .star:hover{
+    opacity: 100%;
+  }
+
+  /* .star:hover ~ a{
+    opacity: 50%;
+  }  */
+
+  /* .starContainer:hover a{
+    opacity: 100%;
+  } */
+
+  body .active{
+    opacity: 100%;
+  }
+
+  body .disable{
+    pointer-events: none;
   }
